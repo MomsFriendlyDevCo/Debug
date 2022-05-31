@@ -1,7 +1,7 @@
 {
   "name": "@momsfriendlydevco/debug",
   "version": "1.0.0",
-  "description": "Chainable log / debugging utility",
+  "description": "Isomorphic, chainable log / debugging utility",
   "main": "lib/debug.js",
   "type": "module",
   "scripts": {

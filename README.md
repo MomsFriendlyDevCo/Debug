@@ -1,6 +1,8 @@
 @MomsFriendlyDevCo/Debug
 ========================
-Chainable log / debugging utility.
+Isomorphic chainable log / debugging utility.
+
+This module works in Node as well as the browser.
 
 
 CJS
