@@ -1,0 +1,61 @@
+{
+  "name": "@momsfriendlydevco/debug",
+  "version": "1.0.0",
+  "description": "Chainable log / debugging utility",
+  "main": "lib/debug.js",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint lib test",
+    "test": "mocha"
+  },
+  "keywords": [
+    "debug",
+    "log",
+    "logger"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MomsFriendlyDevCo/Debug.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MomsFriendlyDevCo/Debug/issues"
+  },
+  "homepage": "https://github.com/MomsFriendlyDevCo/Debug#readme",
+  "author": "Matt Carter <m@ttcarter.com>",
+  "license": "MIT",
+  "engineStrict": true,
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "exports": {
+    ".": {
+      "browser": "./lib/debugBrowser.js",
+      "node": "./lib/debugNode.js",
+      "default": "./lib/debugBase.js"
+    }
+  },
+  "imports": {
+    "#lib/*": "./lib/*.js"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es6": true,
+      "mocha": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 13,
+      "sourceType": "module"
+    }
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "eslint": "^8.16.0",
+    "mocha": "^10.0.0",
+    "strip-ansi": "^7.0.1"
+  },
+  "dependencies": {
+    "chalk": "^5.0.1"
+  }
+}
