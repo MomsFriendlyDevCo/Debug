@@ -39,13 +39,12 @@ describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
 	});
 
 	it('should handle color rotation for multiple logs', ()=> {
-		let log1 = Debug('One').log('Color 1');
-		let log2 = Debug('Two').log('Color 2');
-		let log3 = Debug('Three').log('Color 3');
+		let logs = Array.from(new Array(10))
+			.map((x, i) => Debug(`Log${i+1}`).log('Test output'))
 
-		expect(log1).to.have.property('_color', debugDefaults.colorTable[0]);
-		expect(log2).to.have.property('_color', debugDefaults.colorTable[1]);
-		expect(log3).to.have.property('_color', debugDefaults.colorTable[2]);
+		logs.forEach((log, i) => {
+			expect(log).to.have.property('_color', debugDefaults.colorTable[i]);
+		})
 	});
 
 	it('should handle temporary as() calls inline', ()=> {
