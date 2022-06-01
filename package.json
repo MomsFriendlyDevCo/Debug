@@ -2,7 +2,8 @@
   "name": "@momsfriendlydevco/debug",
   "version": "1.0.0",
   "description": "Isomorphic, chainable log / debugging utility",
-  "main": "lib/debug.js",
+  "main": "lib/debugNode.js",
+  "browser": "lib/debugBrowser.js",
   "type": "module",
   "scripts": {
     "lint": "eslint lib test",

@@ -21,6 +21,8 @@ describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
 		};
 	});
 
+	afterEach('clear mock console state', ()=> output = {});
+
 	it('should output simple logging', ()=> {
 		let log = Debug('test');
 		log('Hello');
@@ -33,6 +35,24 @@ describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
 
 		// Technically this shouldnt be '[object Object]' but when we splat the raw value back thats what we get
 		expect(output).to.deep.equal({log: '[types] string 123 [object Object] false'});
+	});
+
+	it('should handle temporary as() calls inline', ()=> {
+		let log = Debug('Foo');
+		log.as('Bar', 'Test');
+		expect(output).to.deep.equal({log: '[Bar] Test'});
+	});
+
+	it('should handle temporary as() calls with chaining', ()=> {
+		let log = Debug('Foo');
+		log.as('Baz').warn('Test');
+		expect(output).to.deep.equal({warn: '[Baz] Test'});
+	});
+
+	it('should handle multiple as() calls with chaining', ()=> {
+		let log = Debug('Foo');
+		log.as('Quz').as('Quuuz').as('Quuuuz').log('Hello');
+		expect(output).to.deep.equal({log: '[Quuuuz] Hello'});
 	});
 
 });
