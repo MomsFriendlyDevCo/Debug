@@ -55,4 +55,12 @@ describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
 		expect(output).to.deep.equal({log: '[Quuuuz] Hello'});
 	});
 
+	it('only should output once', ()=> {
+		let log = Debug('Foo');
+		log.only('one');
+		log('two');
+		log.log('three');
+		expect(output).to.deep.equal({log: '[Foo] one'});
+	});
+
 });
