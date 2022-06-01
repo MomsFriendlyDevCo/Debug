@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import chalk from 'chalk';
-import Debug from '../lib/debugNode.js';
+import Debug, {debugDefaults} from '../lib/debugNode.js';
 import stripAnsi from 'strip-ansi';
 
 describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
@@ -22,6 +22,7 @@ describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
 	});
 
 	afterEach('clear mock console state', ()=> output = {});
+	afterEach('clear seen log', ()=> debugDefaults.seen = {});
 
 	it('should output simple logging', ()=> {
 		let log = Debug('test');
@@ -35,6 +36,16 @@ describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
 
 		// Technically this shouldnt be '[object Object]' but when we splat the raw value back thats what we get
 		expect(output).to.deep.equal({log: '[types] string 123 [object Object] false'});
+	});
+
+	it('should handle color rotation for multiple logs', ()=> {
+		let log1 = Debug('One').log('Color 1');
+		let log2 = Debug('Two').log('Color 2');
+		let log3 = Debug('Three').log('Color 3');
+
+		expect(log1).to.have.property('_color', debugDefaults.colorTable[0]);
+		expect(log2).to.have.property('_color', debugDefaults.colorTable[1]);
+		expect(log3).to.have.property('_color', debugDefaults.colorTable[2]);
 	});
 
 	it('should handle temporary as() calls inline', ()=> {
