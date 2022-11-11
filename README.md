@@ -102,6 +102,28 @@ debug.new(prefix)
 Create a new debugger based on the given prefix.
 
 
+debug.diff(options)
+-------------------
+Selectively log the differences between two objects.
+
+Options are:
+
+|Name          | Types                     | Default  | Description                                                                                                                                                                     |
+|--------------| ------------------------- | ---------|
+|`log`         | function                  | `this`   | Log output function to use, must provide color library as `.colors` subkey                                                                                                      |
+|`original`    | Object                    |          | Original, pristine value to examine                                                                                                                                             |
+|`originalVia` | function                  |          | Optional function to run original via before diffing. Called as `(original, settings)`                                                                                          |
+|`updated`     | Object                    |          | Updated value, provide either this OR `merge` key                                                                                                                               |
+|`updatedVia`  | function                  |          | Optional function to run updated (or merged) obejcts through via before diffing. Called as `(updated, settings)`                                                                |
+|`merge`       | Object                    |          | Value to merge with original (mutating original)                                                                                                                                |
+|`mergeVia`    | function                  |          | Function to conduct the merge of `original` + `merge`. Called as `(original, merge, settings)`, if this function returns non-falsy that value is now used as the updated object |
+|`prefix`      | string                    |          | String to use as prefix when a diff is detected                                                                                                                                 |
+|`ignore`      | Array or Set              | `['updated']` | Paths to ignore from output                                                                                                                                                     |
+|`noChanges`   | string                    |          | String to force display if no changes are present, if omitted nothing is shown                                                                                                  |
+|`inspect`     | function                  | `utils.inspect` | Inspector to use when formatting object output. Called as `(thing, settings)`                                                                                                   |
+|`formatter`   | function                  |          | Function to use for formated output. Called as `(diff, settings)`                                                                                                               |
+
+
 debug.colors
 ------------
 Only available to Node instances.

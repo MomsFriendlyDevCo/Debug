@@ -73,4 +73,26 @@ describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
 		expect(output).to.deep.equal({log: '[Foo] one'});
 	});
 
+	it('should provide a colors subkey', ()=> {
+		let log = Debug('Color Tests');
+		expect(log).to.have.property('colors');
+		expect(log.colors.cyan).to.be.a('function');
+
+		log(log.colors.red('This'), log.colors.green('is'), log.colors.blue('colorful'));
+		expect(output).to.deep.equal({log: '[Color Tests] This is colorful'});
+	});
+
+});
+
+
+describe('@MomsFriendlyDevCo/Debug (Node + Diff)', ()=> {
+
+	it('should diff two objects', ()=> {
+		let log = Debug('Diff Test');
+		log.diff({
+			original: {foo: 'Foo'},
+			updated: {foo: 'Foo!', bar: 'Bar!'},
+		});
+	});
+
 });
