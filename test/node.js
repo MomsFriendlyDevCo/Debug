@@ -11,11 +11,13 @@ describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
 	before('mock console', ()=>  {
 		console = { // eslint-disable-line no-global-assign
 			log: (...msg) => {
-				output.log = stripAnsi(msg.join(' '));
+				if (!output.log) output.log = [];
+				output.log.push(stripAnsi(msg.join(' ')));
 				oldConsole.log(chalk.bold.white('    ▶'), ...msg);
 			},
 			warn: (...msg) => {
-				output.warn = stripAnsi(msg.join(' '));
+				if (!output.warn) output.warn = [];
+				output.warn.push(stripAnsi(msg.join(' ')));
 				oldConsole.warn(chalk.bold.yellow('    ▶'), ...msg);
 			},
 		};
@@ -27,7 +29,7 @@ describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
 	it('should output simple logging', ()=> {
 		let log = Debug('test');
 		log('Hello');
-		expect(output).to.deep.equal({log: '[test] Hello'});
+		expect(output).to.deep.equal({log: ['[test] Hello']});
 	});
 
 	it('should output handle types', ()=> {
@@ -35,7 +37,7 @@ describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
 		log('string', 123, {foo: 456}, false);
 
 		// Technically this shouldnt be '[object Object]' but when we splat the raw value back thats what we get
-		expect(output).to.deep.equal({log: '[types] string 123 [object Object] false'});
+		expect(output).to.deep.equal({log: ['[types] string 123 [object Object] false']});
 	});
 
 	it('should handle color rotation for multiple logs', ()=> {
@@ -50,19 +52,19 @@ describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
 	it('should handle temporary as() calls inline', ()=> {
 		let log = Debug('Foo');
 		log.as('Bar', 'Test');
-		expect(output).to.deep.equal({log: '[Bar] Test'});
+		expect(output).to.deep.equal({log: ['[Bar] Test']});
 	});
 
 	it('should handle temporary as() calls with chaining', ()=> {
 		let log = Debug('Foo');
 		log.as('Baz').warn('Test');
-		expect(output).to.deep.equal({warn: '[Baz] Test'});
+		expect(output).to.deep.equal({warn: ['[Baz] Test']});
 	});
 
 	it('should handle multiple as() calls with chaining', ()=> {
 		let log = Debug('Foo');
 		log.as('Quz').as('Quuuz').as('Quuuuz').log('Hello');
-		expect(output).to.deep.equal({log: '[Quuuuz] Hello'});
+		expect(output).to.deep.equal({log: ['[Quuuuz] Hello']});
 	});
 
 	it('only should output once', ()=> {
@@ -70,7 +72,7 @@ describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
 		log.only('one');
 		log('two');
 		log.log('three');
-		expect(output).to.deep.equal({log: '[Foo] one'});
+		expect(output).to.deep.equal({log: ['[Foo] one']});
 	});
 
 	it('should provide a colors subkey', ()=> {
@@ -79,9 +81,32 @@ describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
 		expect(log.colors.cyan).to.be.a('function');
 
 		log(log.colors.red('This'), log.colors.green('is'), log.colors.blue('colorful'));
-		expect(output).to.deep.equal({log: '[Color Tests] This is colorful'});
+		expect(output).to.deep.equal({log: ['[Color Tests] This is colorful']});
 	});
 
+	it('should not output messages with too high verbosity', ()=> {
+		let log = Debug('Verbosity Test').verbosity(0);
+		log(0, 'Base');
+		log(1, 'One');
+		log(2, 'Two');
+		log(3, 'Three');
+
+		expect(output).to.deep.equal({log: ['[Verbosity Test] Base']});
+	});
+
+	it('should handle dynamic verbosity changing', ()=> {
+		let log = Debug('Verbosity Test').verbosity(-1);
+		log('Default level'); // Should output
+		log(0, 'Zero'); // Should not output
+		log.verbosity(1);
+		log(1, 'One');
+		log(2, 'Two');
+
+		expect(output).to.deep.equal({log: [
+			'[Verbosity Test] Default level',
+			'[Verbosity Test] One',
+		]});
+	});
 });
 
 

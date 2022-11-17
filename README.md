@@ -44,10 +44,23 @@ debug(...msg)
 -------------
 Debug instance, output whatever input is given with the associated prefix.
 
+See `debug.log()` for full details.
+
 
 debug.log(...msg)
 -----------------
 Output the message contents. This is just a convenience wrapper for `debug(...msg)` that makes chaining a little easier.
+
+If the first argument is a number, it is assumed to be the verbosity level to print at.
+
+```javascript
+import Debug from '../lib/debugNode.js';
+let log = Debug('Foo').verbosity(1);
+
+log('Default'); // Will output
+log(1, 'One'); // Will output if verbosity >= 1
+log(2, 'Two'); // Will not print as if verbosity == 1
+```
 
 
 debug.prefix(prefix)
@@ -95,6 +108,11 @@ Opposite of `enable()`
 debug.only(...msg)
 ------------------
 Output a message (even if disabled) then disable this logger.
+
+
+debug.verbosity(level)
+----------------------
+Set the verbosity level of the debugging component.
 
 
 debug.new(prefix)
