@@ -128,4 +128,12 @@ describe('@MomsFriendlyDevCo/Debug (Node + Diff)', ()=> {
 		});
 	});
 
+	it('should diff two obejcts with number / string changes', ()=> {
+		let log = Debug('Diff Test');
+		log.diff({
+			original: {foo: 1, bar: 2, baz: {quz: {quark: 3}}, name: 'Joe',},
+			updated: {foo: 0, bar: 3, baz: {quz: {quark: 300}}, name: 'John'},
+		});
+	});
+
 });
