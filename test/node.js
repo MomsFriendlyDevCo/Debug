@@ -112,11 +112,19 @@ describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
 
 describe('@MomsFriendlyDevCo/Debug (Node + Diff)', ()=> {
 
-	it('should diff two objects', ()=> {
+	it('should diff two simple objects', ()=> {
 		let log = Debug('Diff Test');
 		log.diff({
 			original: {foo: 'Foo'},
 			updated: {foo: 'Foo!', bar: 'Bar!'},
+		});
+	});
+
+	it('should diff two deep objects', ()=> {
+		let log = Debug('Diff Test');
+		log.diff({
+			original: {foo: {bar: {baz: 'Baz'}}},
+			updated: {foo: {bar: {baz: 'Baz!', quz: 123}}},
 		});
 	});
 
