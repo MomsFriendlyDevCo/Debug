@@ -1,6 +1,6 @@
 {
   "name": "@momsfriendlydevco/debug",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Isomorphic, chainable log / debugging utility",
   "main": "lib/debugNode.js",
   "browser": "lib/debugBrowser.js",
