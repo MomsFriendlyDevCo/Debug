@@ -115,6 +115,27 @@ debug.verbosity(level)
 Set the verbosity level of the debugging component.
 
 
+debug.highlight(match, color, options)
+--------------------------------------
+Add a highlighting option to add color / special characters to matched text.
+
+Match is a RegExp to match against and color is the function to use to decorate the match.
+
+```javascript
+let log = Debug('Highlighting')
+log.highlight(/SKU:\d{3,6}/g, log.colors.blue, {prefix: '▷', suffix: '◁'});
+
+log('Should highlight SKUs like SKU:123, SKU:66666 & SKU:123456');
+```
+
+Options are:
+
+| Option   | Type     | Default | Description                         |
+|----------|----------|---------|-------------------------------------|
+| `prefix` | `string` | `''`    | Optional prefix to add to the match |
+| `suffix` | `string` | `''`    | Optional suffix to add to the match |
+
+
 debug.new(prefix)
 -----------------
 Create a new debugger based on the given prefix.

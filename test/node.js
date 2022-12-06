@@ -110,6 +110,31 @@ describe('@MomsFriendlyDevCo/Debug (Node)', ()=> {
 });
 
 
+describe('@MomsFriendlyDevCo/Debug (Node + Highlighting)', ()=> {
+
+	it('should highlight numbers', ()=> {
+		let log = Debug('Highlight Test #1')
+		log.highlight(/\d+/g, log.colors.cyan);
+
+		log('Should highlight this number > 1234 < that one');
+	})
+
+	it('should highlight more complex matches', ()=> {
+		let log = Debug('Highlight Test #2')
+		log.highlight(/SKU:\d{3,6}/g, log.colors.blue);
+
+		log('Should highlight SKUs like SKU:123, SKU:66666 & SKU:123456');
+	});
+
+	it('should support highlight prefixes / suffixes', ()=> {
+		let log = Debug('Highlight Test #2')
+		log.highlight(/SKU:\d{3,6}/g, log.colors.blue, {prefix: '▷', suffix: '◁'});
+
+		log('Should highlight SKUs like SKU:123, SKU:66666 & SKU:123456');
+	});
+});
+
+
 describe('@MomsFriendlyDevCo/Debug (Node + Diff)', ()=> {
 
 	it('should diff two simple objects', ()=> {
