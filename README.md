@@ -141,6 +141,11 @@ debug.new(prefix)
 Create a new debugger based on the given prefix.
 
 
+debug.clone(prefix)
+-----------------
+Create a new debugger based on the given prefix but also copy over all existing settings.
+
+
 debug.diff(options)
 -------------------
 Selectively log the differences between two objects.
