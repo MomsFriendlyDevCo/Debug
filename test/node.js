@@ -127,10 +127,17 @@ describe('@MomsFriendlyDevCo/Debug (Node + Highlighting)', ()=> {
 	});
 
 	it('should support highlight prefixes / suffixes', ()=> {
-		let log = Debug('Highlight Test #2')
+		let log = Debug('Highlight Test #3')
 		log.highlight(/SKU:\d{3,6}/g, log.colors.blue, {prefix: '▷', suffix: '◁'});
 
 		log('Should highlight SKUs like SKU:123, SKU:66666 & SKU:123456');
+	});
+
+	it('should support custom highlighting', ()=> {
+		let log = Debug('Highlight Test #3')
+		log.highlight(/(BARCODE|SKU):(\d{3,6})/g, (prefix, number) => log.colors.blue.bold(prefix) + ':' + log.colors.blue.underline(number));
+
+		log('Should highlight SKUs like SKU:123, BARCODE:66666 & SKU:123456');
 	});
 });
 

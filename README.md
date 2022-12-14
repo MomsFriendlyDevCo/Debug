@@ -121,6 +121,10 @@ Add a highlighting option to add color / special characters to matched text.
 
 Match is a RegExp to match against and color is the function to use to decorate the match.
 
+If capture groups are used they are passed as the arguments to the function in order, if no capture groups are present the entire matching string is highlighted.
+
+
+
 ```javascript
 let log = Debug('Highlighting')
 log.highlight(/SKU:\d{3,6}/g, log.colors.blue, {prefix: '▷', suffix: '◁'});
