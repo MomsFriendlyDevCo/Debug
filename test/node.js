@@ -168,4 +168,12 @@ describe('@MomsFriendlyDevCo/Debug (Node + Diff)', ()=> {
 		});
 	});
 
+	it('should diff two nullish changes', ()=> {
+		let log = Debug('Diff Test');
+		log.diff({
+			original: {foo: null, bar: undefined},
+			updated: {foo: undefined, bar: null},
+		});
+	});
+
 });
